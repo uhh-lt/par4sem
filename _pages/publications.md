@@ -5,7 +5,7 @@ permalink: /publications/
 ---
 
 Please see [publication page of LT-Lab at UHH](https://www.inf.uni-hamburg.de/en/inst/ab/lt/publications.html) for PDFs
-1. Yimam S.M,  Biemann C. (2017): Par4Sim -- Adaptive Paraphrasing for Text Simplification. In Proceedings of The 27th International Conference on Computational Linguistics (COLING 2018). Santa Fe, New-Mexico, USA (to appear).
+1. Yimam S.M,  Biemann C. (2018): Par4Sim -- Adaptive Paraphrasing for Text Simplification. In Proceedings of The 27th International Conference on Computational Linguistics (COLING 2018). Santa Fe, New-Mexico, USA (to appear).
 1. Yimam S.M, Štajner S., Riedl M., Biemann C. (2017): CWIG3G2 - Complex Word Identification Task across Three Text Genres and Two User Groups. In Proceedings of The 8th International Joint Conference on Natural Language Processing (IJCNLP 2017). Taipei, Taiwan
 1. Yimam S.M, Štajner S., Riedl Martin, Biemann C. (2017): Multilingual and Cross-Lingual Complex Word Identification. In Proceedings of The 2017 International Conference on Recent Advances in Natural Language Processing (RANLP). Varna, Bulgaria
 1. Yimam, S.M., Martínez Alonso, H., Riedl M. and Biemann, C. (2016): Learning Paraphrasing for Multiword Expressions. The 12th Workshop on Multiword Expressions (MWE 2016), co-located with ACL 2016, Berlin, Germany
