@@ -1,0 +1,19 @@
+### your site title here
+
+title: Par4Sim
+
+#baseurl: /krishna
+sass:
+    style: compressed
+
+#logo: "logo.jpg"
+
+# Tracker
+analytics: UA-101167596-2
+
+
+exclude:
+- README.md
+
+include:
+- _pages

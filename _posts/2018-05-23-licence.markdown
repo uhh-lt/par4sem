@@ -1,0 +1,10 @@
+---
+layout: post
+title:  "License!"
+categories: jekyll update
+icon: motorcycle
+---
+
+`Par4Sim` as a software and associated dataset collected are Licensed by [CC-BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
+
+For any other external dataset such as `WordNet` and `PPDB` and software tools such as `Amazon Mechanical Turk SDK for Java` and `the Stanford Parser`, the original license will be applied.
