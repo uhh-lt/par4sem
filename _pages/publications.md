@@ -5,7 +5,7 @@ permalink: /publications/
 ---
 
 Please see [publication page of LT-Lab at UHH](https://www.inf.uni-hamburg.de/en/inst/ab/lt/publications.html) for PDFs
-## Par4Sim
+## Par4Sem
 1. Yimam S.M,  Biemann C. (2018): Par4Sim -- Adaptive Paraphrasing for Text Simplification. In Proceedings of The 27th International Conference on Computational Linguistics (COLING 2018). Santa Fe, New-Mexico, USA (to appear).
 
 ## SEMSCH
