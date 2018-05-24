@@ -4,7 +4,7 @@ title: About Par4Sem
 permalink: /about/
 ---
 
-``Par4Sem`` -- Adaptive Paraphrasing for Text Simplification
+``Par4Sem`` -- Adaptive Paraphrasing for  Semantic-aware Writing Aid Tools
 
 Source code: [https://github.com/uhh-lt/par4sem](https://github.com/uhh-lt/par4sem)
 
