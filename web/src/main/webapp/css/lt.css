@@ -1,0 +1,32 @@
+#checktext {
+	width: 100%;
+	border: 2px solid #888;
+	padding: 1em;
+	margin: 0 0 1em 0;
+	height: 500px;
+	overflow: auto;
+	line-height: 210%;
+	font-size: 18px;
+	background-color: white;
+	resize: both;
+	overflow: auto;
+}
+
+#start {
+	font-size: 28px;
+}
+
+#exp-area {
+	background-color: #E4ECE8;
+	color: #666666;
+	padding-left: 3%;
+	padding-top: 5%;
+	border: 3px solid #187f17;
+}
+/**
+#Origchecktext {
+	border: 3px solid #18389e;
+	padding: 3px;
+	overflow: auto;
+}
+*/

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Re-write the text to make it easier for ...</title>
+<meta name="description" content="">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.spellchecker.js"></script>
+<script type="text/javascript" src="js/lt.js"></script>
+<script type="text/javascript" src="js/TimTurkTools.js"></script>
+<script src="js/jquery.fontselect.js"></script>
+
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="css/jquery.spellchecker.css" />
+<link rel="stylesheet" href="css/lt.css">
+<link rel="stylesheet" href="css/cool.css">
+<link rel="stylesheet" href="css/fontselect-default.css">
+</head>
+<body>
+<a href="https://uhh-lt.github.io/par4sem/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+	<fieldset>
+		<div id="experiment">
+			<h1 style="text-align: center;">
+				<span style="font-family: tahoma, geneva, sans-serif;">Semantic Wrting Aid Tool using Paraphrasing.</span>
+			</h1>
+			<p style="text-align: center;">
+				
+			</p>
+			<span id="Origchecktext"> </span>
+			<div id="exp-area">
+
+				<table>
+					<tr>
+						<td><input id="font" type="text"></td>
+						<td><select id="size">
+								<option value="7">7</option>
+								<option value="10">10</option>
+								<option value="12">12</option>
+								<option value="14">14</option>
+								<option value="16">16</option>
+								<option selected="selected" value="18">18</option>
+								<option value="20">20</option>
+								<option value="22">22</option>
+								<option value="24">24</option>
+								<option value="26">26</option>
+								<option value="28">28</option>
+								<option value="30">30</option>
+						</select></td>
+					</tr>
+				</table>
+				<div contenteditable="true" id="checktext">
+					Type your text here!!
+				</div>
+				<table align="center">
+					<tr>
+						<td>
+							<form action="" autocomplete="off" id="turkSubmit" method="post">
+                                <input id="assignmentId" name="assignmentId" type="hidden"
+                                									value="" />
+							<!--
+							<div>
+									<span class="input-group"><span style="font-family:tahoma,geneva,sans-serif;"> 
+									<span style="font-family:tahoma,geneva,sans-serif;"><strong><label>Your comments here</label></strong>:</span>
+									<textarea cols="100" id="comment" name="comment" placeholder="Write your comments here" rows="2" type="text"></textarea></span></span>
+									<span class="input-group"><span style="display:none;"><textarea class="form-control" id="simpleTextSubmit" name="simpleTextSubmit"></textarea></span></span>
+									<span class="input-group"><span style="display:none;"><textarea class="form-control" id="origTextSubmit" name="origTextSubmit"></textarea></span></span>
+								</div>
+								 
+									<input class="btn-gradient gray" id="submitButton"
+									name="submitButton" type="submit" value="Submit" /> 
+
+									<input class="btn-gradient cyan" type="button" id="btn_reload" value="Reload"
+									onClick="if (!confirm('Are you sure? You will loose you changes!')) return false; reloadText();"
+									title="Get text anew" /> 
+									 -->
+									<input
+									class="btn-gradient cyan" type="button" id="btn_undo"
+									value="Undo"
+									onClick="getUndo('undo');"
+									title="Undo my changes" /> 
+									
+									<input
+									class="btn-gradient cyan" type="button" id="btn_redo"
+									value="Redo"
+									onClick="getUndo('redo');"
+									title="Redo my changes" /> 
+									
+									<input class="btn-gradient cyan"
+									type="button" id="check-textarea" value="Highlight targets"></input>
+								<!--  	
+								  <input class="btn-gradient cyan" type="button"
+									id="show-instruction" value="Show instructions"></input> 
+									
+									<input class="btn-gradient cyan" type="button" id="show-orig-text"
+									value="Show original text"></input> -->
+									<IMG id="loading" SRC="images/ajax-loader.gif">
+							</form>
+
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>		
+		<div id="instructions"
+			style="background-color: #E4ECE8; color: #666666; padding-left: 3%; padding-top: 2%;">
+				<h1 style="text-align: center;">
+				<span style="font-family: tahoma, geneva, sans-serif;">Semantic Wrting Aid Tool using Paraphrasing!</span>
+			</h1>
+			<p>
+			This tool supports document composing by providing paraphrase candidates for a given target words or phrases. 
+				
+			</p>
+
+	
+		Write your text and highlight a word or a phrase to get candidate substitutes.
+			
+			<p>
+				 
+			</p>
+			<strong>
+			How to work with the buttons:
+			</strong>
+			<ul>
+				<li><strong><span style="color:blue">Undo/Redo</span></strong>: Undo or redo your changes </li>
+				<li><strong><span style="color:blue">Highlight targets</span></strong>: Highlight target words automatically based on a complex word identification machine learning model. </li>
+			</ul>
+
+			<h1 style="text-align: center">
+				<a  href="javascript:StartExperiment();void(0);" id="start" >Start Using the Tool</a>
+			</h1>
+			<p>Below you can see the animation on how to use the tool.</p>
+		</div>
+	</fieldset>
+ 
+	<IMG id="animation" SRC="images/par4sim.gif">
+
+</body>
+</html>

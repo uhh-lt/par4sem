@@ -1,0 +1,7 @@
+ssh -L 3307:127.0.0.1:3306 seid@farnsworth.lt.informatik.tu-darmstadt.de
+
+Then in the code use jdbc:mysql://127.0.0.1:3307
+
+
+// LM in frink (ltcpu2)
+ssh -L 11099:127.0.0.1:11099 -L  10099:127.0.0.1:10099 fk

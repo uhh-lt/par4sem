@@ -1,0 +1,27 @@
+Got account balance: 339.95
+Created HIT: 3AXFSPQOYQYYB4I7POGGZMOFXY9JFR
+You may see your HIT with HITTypeId '379L1CFRK7L30JC8NWTVCGNT5GZ8TM' here: 
+https://www.mturk.com/mturk/preview?groupId=379L1CFRK7L30JC8NWTVCGNT5GZ8TM
+Created HIT: 3BA7SXOG1JQ6UDRXPFJJRLTKKBQR8A
+You may see your HIT with HITTypeId '34WBNEQO09R9M2XNMJ8A33CCP1NBRB' here: 
+https://www.mturk.com/mturk/preview?groupId=34WBNEQO09R9M2XNMJ8A33CCP1NBRB
+Success.
+
+
+This user is equally advanced and intermiddiate???
+
+for French : Hits are created with java escapehtml. make sure to unescape when importing back
+
+To build util
+first run mvn clean isntall from ../
+then from eclipse right click-->run as--> install
+
+
+cd to lib
+
+mvn install:install-file -Dfile=featran-assembly-0.1.15-SNAPSHOT.jar -DgroupId=featran -DartifactId=featran -Dversion=1.0 -Dpackaging=jar
+
+
+======DEEPLEARNING ISSUE=====
+1. Put them at the first line
+2. If you need to creat HIT, comment out the Dl4J dependencies

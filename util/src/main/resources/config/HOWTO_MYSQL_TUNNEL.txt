@@ -1,0 +1,7 @@
+ssh -L 3307:127.0.0.1:3306 seid@farnsworth.lt.informatik.tu-darmstadt.de
+
+Then in the code use jdbc:mysql://127.0.0.1:3307
+
+ssh -L10000:0.0.0.0:10000 -L1098:0.0.0.0:1098 fw
+
+ bin/lm de.tudarmstadt.lt.lm.app.StartLM -t BerkeleyLM -n 3 -i enwikinews -d en_news_wiki_small -rp 1098 -h 134.100.15.206 -p 10000

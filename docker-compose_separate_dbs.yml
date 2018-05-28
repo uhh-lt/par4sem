@@ -1,0 +1,121 @@
+version: '3'
+
+networks:
+  par:
+
+services:
+  par4sem:
+    build: .
+    restart: on-failure
+    networks:
+      par:
+    volumes:
+      - /Users/seidmuhieyimam/data/ph2vecmodel: /srv/data/semsch/models/w2v
+      - /Users/seidmuhieyimam/Desktop/tmp/tmp: /srv/data/semsch/models/wiki
+      - /Users/seidmuhieyimam/git/research/semsch/web/src/main/resources/datasets/cwi/raw/news: /srv/data/semsch/models/train
+    depends_on:
+          cwinews:
+            condition: service_healthy
+          par4sim:
+            condition: service_healthy
+          DT_wikipedia_trigram:
+            condition: service_healthy
+          simpleppdb:
+            condition: service_healthy
+          ppdb2:
+            condition: service_healthy
+  cwinews:
+      image: mariadb
+      environment:
+         MYSQL_ROOT_PASSWORD: dummy
+         MYSQL_DATABASE: par4sim
+         MYSQL_USER: dummy
+         MYSQL_PASSWORD: dummy
+      ports:
+        - "3307:3306"
+      volumes:
+        - ${PWD}/mysql-data/cwinews/:/var/lib/mysql
+      command: ["--character-set-server=utf8", "--collation-server=utf8_bin"]
+      healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-pdummy", "-udummy"]
+        interval: 20s
+        timeout: 10s
+        retries: 10
+      networks:
+        par:
+  par4sim:
+      image: mariadb
+      environment:
+         MYSQL_ROOT_PASSWORD: dummy
+         MYSQL_DATABASE: par4sim
+         MYSQL_USER: dummy
+         MYSQL_PASSWORD: dummy
+      ports:
+        - "3308:3306"
+      volumes:
+        - ${PWD}/mysql-data/par4sim/:/var/lib/mysql
+      command: ["--character-set-server=utf8", "--collation-server=utf8_bin"]
+      healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-pdummy", "-udummy"]
+        interval: 20s
+        timeout: 10s
+        retries: 10
+      networks:
+        par:
+  DT_wikipedia_trigram:
+      image: mariadb
+      environment:
+         MYSQL_ROOT_PASSWORD: dummy
+         MYSQL_DATABASE: DT_wikipedia_trigram
+         MYSQL_USER: dummy
+         MYSQL_PASSWORD: dummy
+      ports:
+        - "3309:3306"
+      volumes:
+        - ${PWD}/mysql-data/DT_wikipedia_trigram/:/var/lib/mysql
+      command: ["--character-set-server=utf8", "--collation-server=utf8_bin"]
+      healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-pdummy", "-udummy"]
+        interval: 20s
+        timeout: 10s
+        retries: 10
+      networks:
+        par:
+  simpleppdb:
+      image: mariadb
+      environment:
+         MYSQL_ROOT_PASSWORD: dummy
+         MYSQL_DATABASE: simpleppdb
+         MYSQL_USER: dummy
+         MYSQL_PASSWORD: dummy
+      ports:
+        - "3340:3306"
+      volumes:
+        - ${PWD}/mysql-data/simpleppdb/:/var/lib/mysql
+      command: ["--character-set-server=utf8", "--collation-server=utf8_bin"]
+      healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-pdummy", "-udummy"]
+        interval: 20s
+        timeout: 10s
+        retries: 10
+      networks:
+        par:
+  ppdb2:
+      image: mariadb
+      environment:
+         MYSQL_ROOT_PASSWORD: dummy
+         MYSQL_DATABASE: ppdb2
+         MYSQL_USER: dummy
+         MYSQL_PASSWORD: dummy
+      ports:
+        - "3341:3306"
+      volumes:
+        - ${PWD}/mysql-data/ppdb2/:/var/lib/mysql
+      command: ["--character-set-server=utf8", "--collation-server=utf8_bin"]
+      healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-pdummy", "-udummy"]
+        interval: 20s
+        timeout: 10s
+        retries: 10
+      networks:
+        par:

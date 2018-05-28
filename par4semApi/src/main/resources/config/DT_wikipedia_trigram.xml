@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseThesaurusConfiguration>
+    <tables>
+        <tableSimilarTerms>LMI_1000_l200</tableSimilarTerms>
+        <tableSimilarContexts>LMI_1000_feature_l200</tableSimilarContexts>
+        <tableTermContextsScore>LMI_1000</tableTermContextsScore>
+        <tableContextsTermScore>LMI_1000</tableContextsTermScore>
+        <tableContextsCount>feature_count</tableContextsCount>
+        <tableTermCount>word_count</tableTermCount>
+        <senses name="CW" isDefault="true">
+	        <tableSenses>LMI_1000_l200_cluster_a1_N200_n200</tableSenses>
+	        <tableIsas>LMI_1000_l200_cluster_a1_N200_n200</tableIsas>
+	        <tableSenseCUIs>LMI_1000_l200_cluster_a1_N200_n200</tableSenseCUIs>
+        </senses>
+    </tables>
+
+    <dbUrl>jdbc:mysql://db:3306/DT_wikipedia_trigram</dbUrl>
+        <dbUser>dummy</dbUser>
+    <dbPassword>dummy</dbPassword>
+    <jdbcString>com.mysql.jdbc.Driver</jdbcString>
+    <similarTermsQuery>select word2, count from $tableSimilarTerms where word1=? order by count desc </similarTermsQuery>
+    <similarTermsTopQuery>select  word2, count from $tableSimilarTerms where word1=? order by count desc LIMIT 0, $numberOfEntries </similarTermsTopQuery>
+    <similarTermsGtScoreQuery>select word2, count from $tableSimilarTerms where word1=? and count&gt;? ORDER BY count DESC</similarTermsGtScoreQuery>
+    <similarTermScoreQuery>select SIM from $tableSimilarTerms where word1=? and word2=?</similarTermScoreQuery>
+    <similarContextsQuery>SELECT feature2,count FROM $tableSimilarContexts WHERE feature1 = ? ORDER BY count desc</similarContextsQuery>
+    <similarContextsTopQuery>SELECT feature2,count FROM $tableSimilarContexts WHERE feature1 = ? ORDER BY count desc LIMIT 0, $numberOfEntries</similarContextsTopQuery>
+    <termsCountQuery>SELECT COUNT FROM $tableTermCount WHERE word=?</termsCountQuery>
+    <contextsCountQuery>SELECT COUNT FROM $tableContextsCount WHERE feature = ?</contextsCountQuery>
+    <termContextsCountQuery>SELECT count FROM $tableTermContextsScore WHERE word =? and feature = ?</termContextsCountQuery>
+    <termContextsScoreQuery>SELECT SIG FROM $tableTermContextsScore WHERE word =? and feature = ?</termContextsScoreQuery>
+    <termContextsScoresQuery>SELECT feature, SIG, count FROM $tableTermContextsScore WHERE word =? ORDER BY SIG desc</termContextsScoresQuery>
+    <termContextsScoresTopQuery>SELECT feature, SIG, count FROM $tableTermContextsScore WHERE word =? ORDER BY SIG desc limit 0, $numberOfEntries </termContextsScoresTopQuery>
+    <termContextsScoresGtScoreQuery>SELECT feature, SIG, count FROM $tableTermContextsScore WHERE word =? and SIG &gt; ? ORDER BY SIG desc</termContextsScoresGtScoreQuery>
+    <sensesQuery>select cid,cluster, "" from  $tableSenses  where word= ?</sensesQuery>
+    <senseCUIsQuery>SELECT CID, CUIS_1 FROM $tableSenseCUIs where w_match=?</senseCUIsQuery>
+    <isasQuery>SELECT CID, ISAS FROM $tableIsas where w_match=?</isasQuery>
+    <isTermContained>select W.word FROM $tableTermCount W left JOIN $tableSimilarTerms S on W.word = S.word1 LEFT JOIN $tableTermContextsScore F ON W.word = F.word  where W.word in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) GROUP BY W.word</isTermContained>
+</databaseThesaurusConfiguration>

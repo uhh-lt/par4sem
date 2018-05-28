@@ -1,0 +1,37 @@
+version: '2.1'
+
+networks:
+  par:
+
+services:
+  par4sem:
+    image: uhhlt/par4sem
+    restart: on-failure
+    networks:
+      par:
+    ports:
+      - 10014:19090
+    volumes:
+      - ${PWD}/data:/srv/data
+    depends_on:
+          db:
+            condition: service_healthy
+  db:
+    image: mariadb
+    environment:
+       MYSQL_ROOT_PASSWORD: dummy
+       MYSQL_DATABASE: test
+       MYSQL_PORT: 3306
+       MYSQL_USER: dummy
+       MYSQL_PASSWORD: dummy
+    volumes:
+      - ${PWD}/mysql-data:/var/lib/mysql
+      - ${PWD}/dumps:/docker-entrypoint-initdb.d
+    command: ["--character-set-server=utf8", "--collation-server=utf8_bin"]
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-pdummy", "-udummy"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+    networks:
+      par:

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result>
+	<language shortname="en-US" name="English (US)" />
+	<error fromy= "2" fromx= "119" toy ="2" tox = "121"
+		ruleId="CASE" msg="This sentence does not start with an uppercase letter"
+		replacements="Or#Oder"
+		context="...hrases for details on potential errors. or use this text too see an few of of the ..."
+		contextoffset="43" offset="121" errorlength="2" category="Capitalization"
+		locqualityissuetype="typographical" />
+	<error fromy="2" fromx="136" toy="2" tox="143" ruleId="REP"
+		msg="Did you mean 'to see'?" replacements="to see"
+		offset="138" errorlength="7" />
+	<error fromy="2" fromx="144" toy="2" tox="146" ruleId="NOTAN"
+		msg="Use 'a' instead of 'an' if the following word doesn't start with a vowel sound, e.g. 'a sentence', 'a university'"
+		replacements="a"
+		context="...ential errors. or use this text too see an few of of the problems that LanguageToo..."
+		contextoffset="43" offset="146" errorlength="2" category="Miscellaneous"
+		/>
+	<error fromy="2" fromx="151" toy="2" tox="156"
+		ruleId="ENGLISH_WORD_REPEAT_RULE" msg="Possible typo: you repeated a word"
+		replacements="of"
+		context="...errors. or use this text too see an few of of the problems that LanguageTool can dete..."
+		contextoffset="43" offset="153" errorlength="5" category="Miscellaneous"
+		locqualityissuetype="duplication" />
+	<error fromy="2" fromx="192" toy="2" tox="198" ruleId="MORFOLOGIK_RULE_EN_US"
+		msg="Possible spelling mistake found" replacements="detect"
+		context="...f of the problems that LanguageTool can detecd. What do you thinks of grammar checkers..."
+		contextoffset="43" offset="194" errorlength="6" category="Possible Typo"
+		locqualityissuetype="misspelling" />
+	<error fromy="2" fromx="212" toy="2" tox="218" ruleId="NON3PRS_VERB"
+		subId="3"
+		msg="The pronoun 'you' must be used with a non-third-person form of a verb: 'think'"
+		replacements="think"
+		context="...at LanguageTool can detecd. What do you thinks of grammar checkers? Please not that th..."
+		contextoffset="43" offset="214" errorlength="6" category="Grammar"
+		locqualityissuetype="grammar" />
+	<error fromy="2" fromx="247" toy="2" tox="250" ruleId="PLEASE_NOT_THAT"
+		subId="1" msg="Did you mean 'note'?" replacements="note"
+		context="... you thinks of grammar checkers? Please not that they are not perfect."
+		contextoffset="43" offset="249" errorlength="3" category="Possible Typo"
+		locqualityissuetype="misspelling" />
+</result>
