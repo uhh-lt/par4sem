@@ -1,9 +1,11 @@
 ---
 layout: post
-title: Contact
+title: Contact Us
 permalink: /contact/
 ---
+ Do you have any question about `Par4Sem`?
 
+ Send us your question using the following form!
 <script type="text/javascript">
 //<![CDATA[
 <!--

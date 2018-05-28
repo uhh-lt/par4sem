@@ -10,7 +10,7 @@ Source code: [https://github.com/uhh-lt/par4sem](https://github.com/uhh-lt/par4s
 
 Datasets : [https://github.com/uhh-lt/par4sem](https://github.com/uhh-lt/par4sem)
 
-Demo :
+Demo : [here](https://ltmaggie.informatik.uni-hamburg.de/par4sem/)
 
 **Does ``Par4Sem`` deserve a star?**
 
