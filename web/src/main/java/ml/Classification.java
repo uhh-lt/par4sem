@@ -49,7 +49,7 @@ public class Classification {
         cl.test();
     }
 
-    public void train( Properties prop) {
+    public void train( Properties prop)  throws Exception{
 
 
         // Initialization
@@ -200,7 +200,7 @@ public class Classification {
         testingDataframe.close();
     }
 
-    public List<Object> predict(String fileName) {
+    public List<Object> predict(String fileName) throws Exception {
 
         Dataframe testingDataframe;
         try (Reader fileReader = new InputStreamReader(new FileInputStream(new File(fileName)),

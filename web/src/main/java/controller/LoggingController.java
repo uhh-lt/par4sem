@@ -32,7 +32,12 @@ public class LoggingController extends HttpServlet {
 		try {
 			doPost(request, response);
 		} catch (Exception e) {
-			Controller.reInit();
+			try {
+                Controller.reInit();
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 		  //  e.printStackTrace();
 		}
 	}
@@ -44,7 +49,12 @@ public class LoggingController extends HttpServlet {
 			System.out.println("======LOGGING=====");
 			post(request, response);
 		} catch (Exception e) {
-		    Controller.reInit();
+		    try {
+                Controller.reInit();
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 		    e.printStackTrace();
 		}
 	}

@@ -78,13 +78,13 @@ public class Controller extends HttpServlet {
 
             System.out.println("DB Initialization ... Done");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Failed to Initialize "+ e.getMessage());
         }
 
     }
     
 
-    public static void reInit() throws ServletException {
+    public static void reInit() throws Exception {
        Controller cr = new Controller();
        try {
        Par4SemResource.ppdb2Conn.close();
@@ -93,13 +93,14 @@ public class Controller extends HttpServlet {
        Par4SemResource.cwiConn.close();
        Par4SemResource.simpleppdbConn.close();
        Par4SemResource.wordNetConn.close();
-      // dbInit(prop);
+      
       // Par4SemResource.sql2oPar4Sim.getDataSource().getConnection().close();
        }
        catch (Exception e){
            System.out.println("closing" + e.getMessage());
        }
-       cr.init();
+       dbInit(prop);
+     //  cr.init();
 
     }
 
@@ -245,6 +246,7 @@ public class Controller extends HttpServlet {
 			Par4SemResource.jobimtextInit();
 			System.out.println("Inside initResources jobimtextInit... DONE");
 		} catch (Exception e) {
+		    System.out.println("Error initResources jobimtextInit... Failed " + e.getMessage() );
 			// TODO
 		}
 		try {
@@ -252,6 +254,7 @@ public class Controller extends HttpServlet {
 			Par4SemResource.wordNetInit(prop);
 			System.out.println("Inside initResources wordNetInit... DONE");
 		} catch (Exception e) {
+		    System.out.println("Error initResources wordNetInit... Failed "+e.getMessage());
 			// TODO
 		}
 		/*
@@ -271,6 +274,7 @@ public class Controller extends HttpServlet {
 			Par4SemResource.initPar4SimDB(prop);
 			System.out.println("Inside initResources initPar4SimDB... DONE");
 		} catch (Exception e) {
+		    System.out.println("Error initResources initPar4SimDB... Failed" + e.getMessage());
 			// TODO
 		}
 		try {

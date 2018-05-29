@@ -301,7 +301,11 @@ function reloadText(content) {
 		}
 	});
 }
-
+// ============CLEAR TEXT
+function clearText(content) {
+	$('#checktext').html(content);
+	spellchecker.check();
+}
 
 //=========================UNDO TEXT CHANGES ================
 function getUndo(reun) {

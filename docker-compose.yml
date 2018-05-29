@@ -33,5 +33,7 @@ services:
       interval: 20s
       timeout: 10s
       retries: 10
+    ports:
+      - 10015:19090
     networks:
       par:

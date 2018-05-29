@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,14 +31,13 @@ import com.google.gson.JsonArray;
 import cwi.AnswerShared;
 import cwi.CWI;
 import cwi.CWIFeaturize;
-import database.Par4SemResource;
 import undoredo.ChangeLabelManager;
 import undoredo.ChangeManager;
 import undoredo.ParaphraseLabelChanger;
 import undoredo.ParaphraseTextChanger;
 import utils.OpenNLPSegmenter;
 
-
+@SuppressWarnings("unchecked")
 @WebServlet(value = "/SpellChecker", name = "SpellChecker")
 public class CheckSpelling extends HttpServlet {
     private static final long serialVersionUID = -2908926119230344244L;
@@ -53,8 +51,13 @@ public class CheckSpelling extends HttpServlet {
         try {
         doPost(request, response);
         }
-        catch (EOFException e){
-        	Controller.reInit();
+        catch (Exception e){
+        	try {
+                Controller.reInit();
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         //    e.printStackTrace();
         }
     }
@@ -66,7 +69,11 @@ public class CheckSpelling extends HttpServlet {
             System.out.println("======CHECKING====="+ request.getParameter("text"));
             post(request, response);
         } catch (Exception e) {
-            Controller.reInit();
+            try {
+                Controller.reInit();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -111,7 +118,17 @@ public class CheckSpelling extends HttpServlet {
         }
 
         System.out.println("Action="+request.getParameter(ACTION));
+        if(Controller.getNewLinedText(html).isEmpty()) {
+            obj.put("outcome", "success");
+            JsonArray inArray = new JsonArray();
+            obj.put("data", inArray);
+            out.write(obj.toJSONString());
+            out.close();
+            out.close();
+            return ;
+        }
         if (request.getParameter(ACTION).equals(GET_CWI)) {
+            
             highlightCwis(out, obj, Controller.getNewLinedText(html), hitId, workerId);
         } 
         // replacing words - hence remove highlighted words (and do highlight immediaTELY)
@@ -121,7 +138,7 @@ public class CheckSpelling extends HttpServlet {
 
     }
 
-    @SuppressWarnings("unchecked")
+    
     private void highlightSelection(PrintWriter out, JSONObject obj, JsonArray existingMatches,
             HttpSession session, String hitId) throws IOException, SQLException {
         String selection = (String) session.getAttribute(Controller.SELECTION);
@@ -148,7 +165,7 @@ public class CheckSpelling extends HttpServlet {
        return;
     }
 
-    @SuppressWarnings("unchecked")
+   
     public void highlightCwis(PrintWriter out, JSONObject obj, String text, String hitId, String workerId) throws Exception {
 
 		JsonArray lables = new JsonArray();
@@ -224,7 +241,7 @@ public class CheckSpelling extends HttpServlet {
 
 		out.close();
     }
-	    @SuppressWarnings("unchecked")
+	 
 	    private void highlightCwisUndo(PrintWriter out, JSONObject obj, HttpSession session, String hitIdWorkerId) throws IOException {
 
 			JsonArray lables = Controller.changeLablesManagers.get(hitIdWorkerId).getLables();

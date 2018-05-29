@@ -77,6 +77,12 @@
 									title="Get text anew" /> 
 									 -->
 									<input
+									class="btn-gradient cyan" type="button" id="btn_clear"
+									value="Clear"
+									onClick="if (!confirm('Are you sure? You will loose you text')) return false; clearText('');"
+									title="Clear Text" /> 
+									
+									<input
 									class="btn-gradient cyan" type="button" id="btn_undo"
 									value="Undo"
 									onClick="getUndo('undo');"

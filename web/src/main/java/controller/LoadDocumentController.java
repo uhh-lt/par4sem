@@ -32,7 +32,12 @@ public class LoadDocumentController extends HttpServlet {
 			System.out.println("======LOADING=====" + request.getParameter("text"));
 			post(request, response);
 		} catch (Exception e) {
-			Controller.reInit();
+			try {
+                Controller.reInit();
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 		  //  e.printStackTrace();
 		}
 	}
