@@ -45,7 +45,7 @@ $(document).ready(function() {
 		lang : 'en',
 		parser : 'html',
 		webservice : {
-			path : 'SpellChecker?',
+			path : appConfig.URL+'/SpellChecker?',
 			driver : 'PSpell'
 		},
 		suggestBox : {
@@ -162,7 +162,7 @@ $(document).ready(function(){
 	// text = $('#checktext').text();
 	// $('#checktext').html(text);
 	$.ajax({
-		url : "updater",
+		url : appConfig.URL+"/updater",
 		type : "POST",
 		data : ({
 			"textSelected" : textSelected,
@@ -221,7 +221,7 @@ $(function() {
 
 function sendLocation(pi, cnt,cd) {
 	$.ajax({
-		url : "logger",
+		url : appConfig.URL+"/logger",
 		type : "POST",
 		data : ({
 			"pi" : pi,
@@ -267,7 +267,7 @@ function StartExperiment() {
 function startOver() {
 	var hitId = GetHitId()
 	$.ajax({
-		url : "loadDocument",
+		url : appConfig.URL+"/loadDocument",
 		type : "POST",
 		data : ({
 			"start" : true,
@@ -282,7 +282,7 @@ function startOver() {
 function reloadText(content) {
 	var hitId = GetHitId()
 	$.ajax({
-		url : "loadDocument",
+		url : appConfig.URL+"/loadDocument",
 		type : "POST",
 		data : ({
 			"content" : content,
@@ -311,7 +311,7 @@ function clearText(content) {
 function getUndo(reun) {
 	var hitId = GetHitId()
 	$.ajax({
-		url : "loadDocument",
+		url : appConfig.URL+"/loadDocument",
 		type : "POST",
 		data : ({
 			"undo" : reun,
@@ -370,7 +370,7 @@ function displayNext() {
 // LOG the text to the database
 function logit(text, html, undo) {
 	$.ajax({
-		url : "logger",
+		url : appConfig.URL+"/logger",
 		type : "POST",
 		dataType : "text",
 		data : {
@@ -412,7 +412,7 @@ function enableButton(){
 
 function setText(id) {
 	$.ajax({
-		url : "checkDocument",
+		url : appConfig.URL+"/checkDocument",
 		type : "POST",
 		data : ({
 			"hitId" : id,

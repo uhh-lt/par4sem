@@ -26,7 +26,7 @@ public class SemschSchedulerListner implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent ctx) {
-        // define the job and tie it to our HelloJob class
+
         JobDetail job = JobBuilder.newJob(SemschJob.class)
                 .withIdentity("SemschJob", "group1").build();
 
@@ -37,7 +37,7 @@ public class SemschSchedulerListner implements ServletContextListener {
                 .startNow()
                 .withSchedule(
                         SimpleScheduleBuilder.simpleSchedule()
-                                .withIntervalInMinutes(30).repeatForever())
+                                .withIntervalInMinutes(5).repeatForever())
                 .build();
         // Tell quartz to schedule the job using our trigger
 

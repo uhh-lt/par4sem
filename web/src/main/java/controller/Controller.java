@@ -38,30 +38,40 @@ import utils.Utils;
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = -2908926119230344244L;
     // static Par4SemResource con = new Par4SemResource();
-   public static GetParaphrase conf;
+    public static GetParaphrase conf;
     static Properties prop;
-  //  public static final String HIT_MATCHES = "hit-matches";
-    public static final String UNDO ="undo";
-    public static final String SELECTION= "selection";
+    // public static final String HIT_MATCHES = "hit-matches";
+    public static final String UNDO = "undo";
+    public static final String SELECTION = "selection";
     public static final String WORKERID = "workerId";
     public static final String HITID = "hitId";
-    public static final String ASSIGNMENTID ="assignmentId";
+    public static final String ASSIGNMENTID = "assignmentId";
     public static final String HTML = "html";
     public static final String START = "start";
     public static final String ORIG_TEXT = "orig_text";
     public static final int TRESHOLD = 58;
-    
-   // public static final String HITLABLES ="hit-lables";
-   
+
+    // public static final String HITLABLES ="hit-lables";
+
     static String prevDoc = "";
     JSONArray PrevMatches = null;
-   static Map<String, ChangeManager> changeManagers;
-   static Map<String, ChangeLabelManager> changeLablesManagers;
-//   public static Word2Vec p2v;
-   public static RestTemplate restTemplate = new RestTemplate();
-   public static Classification cl = new Classification();
- // public static CWIFeaturize cwif = new CWIFeaturize();
+    static Map<String, ChangeManager> changeManagers;
+    static Map<String, ChangeLabelManager> changeLablesManagers;
+    // public static Word2Vec p2v;
+    public static RestTemplate restTemplate = new RestTemplate();
+    public static Classification cl = new Classification();
+    // public static CWIFeaturize cwif = new CWIFeaturize();
     // StanfordLemmatizer slem;
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        fixHeaders(response);
+    }
+    
+    public static void fixHeaders(HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, OPTIONS, DELETE");
+        response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.addHeader("Access-Control-Max-Age", "86400");
+    }
 
     @Override
     public void init() throws ServletException {
@@ -69,221 +79,230 @@ public class Controller extends HttpServlet {
 
             ClassLoader classLoader = Controller.class.getClassLoader();
             InputStream in = classLoader.getResourceAsStream("/config/semsch.properties");
-       //     InputStream in = classLoader.getResourceAsStream("semsch.properties"); // when updating candidates from UpdateCandidate
+            // InputStream in = classLoader.getResourceAsStream("semsch.properties"); //
+            // when updating candidates from UpdateCandidate
             Properties prop = Utils.getConfigs(in);
             System.out.println("DB Initialization ...");
             initResources(prop);
-            
-            
 
             System.out.println("DB Initialization ... Done");
         } catch (Exception e) {
-            System.out.println("Failed to Initialize "+ e.getMessage());
+            System.out.println("Failed to Initialize " + e.getMessage());
         }
 
     }
-    
 
     public static void reInit() throws Exception {
-       Controller cr = new Controller();
-       try {
-       Par4SemResource.ppdb2Conn.close();
-       Par4SemResource.dTConn.close();
-       Par4SemResource.par4SimConn.close();
-       Par4SemResource.cwiConn.close();
-       Par4SemResource.simpleppdbConn.close();
-       Par4SemResource.wordNetConn.close();
-      
-      // Par4SemResource.sql2oPar4Sim.getDataSource().getConnection().close();
-       }
-       catch (Exception e){
-           System.out.println("closing" + e.getMessage());
-       }
-       dbInit(prop);
-     //  cr.init();
+        Controller cr = new Controller();
+        try {
+            Par4SemResource.ppdb2Conn.close();
+        } catch (Exception e) {
+            System.out.println("closing" + e.getMessage());
+        }
+        try {
+            Par4SemResource.dTConn.close();
+        } catch (Exception e) {
+            System.out.println("closing" + e.getMessage());
+        }
+        try {
+            Par4SemResource.par4SimConn.close();
+        } catch (Exception e) {
+            System.out.println("closing" + e.getMessage());
+        }
+        try {
+            Par4SemResource.cwiConn.close();
+        } catch (Exception e) {
+            System.out.println("closing" + e.getMessage());
+        }
+        try {
+            Par4SemResource.simpleppdbConn.close();
+        } catch (Exception e) {
+            System.out.println("closing" + e.getMessage());
+        }
+        try {
+            Par4SemResource.wordNetConn.close();
+
+            // Par4SemResource.sql2oPar4Sim.getDataSource().getConnection().close();
+        } catch (Exception e) {
+            System.out.println("closing" + e.getMessage());
+        }
+        dbInit(prop);
+        // cr.init();
 
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+                    throws ServletException, IOException {
         try {
             doPost(request, response);
-            }
-            catch (EOFException e){
-                init();
-            }
+        } catch (EOFException e) {
+            init();
+        }
     }
 
     @Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-    	 HttpSession session = request.getSession();
-		String body = request.getReader().readLine();
-		String textbody = (String) session.getAttribute("text");
-		String hitId = request.getParameter("hitId");
-		String texts = request.getParameter("text");
-		System.out.println("Texts =" + texts);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+                    throws ServletException, IOException {
+        try {
+            fixHeaders(response);
+            // Your code here...
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("text/plain");
+            response.getWriter().println(buildErrorMessage(e));
+        } catch (Throwable e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("text/plain");
+            response.getWriter().println(buildErrorMessage(e));
+        }
+        
+        HttpSession session = request.getSession();
+        String body = request.getReader().readLine();
+        String textbody = (String) session.getAttribute("text");
+        String hitId = request.getParameter("hitId");
+        String texts = request.getParameter("text");
+        System.out.println("Texts =" + texts);
 
-		response.setContentType("application/json");
-		response.setHeader("Cache-Control", "no-cache");
-		// System.out.println(syn.getXml(text));
-		// System.out.println(result);
-		// response.getWriter().write(text);
-		JSONObject jOMatches = new JSONObject();
+        response.setContentType("application/json");
+        response.setHeader("Cache-Control", "no-cache");
+        // System.out.println(syn.getXml(text));
+        // System.out.println(result);
+        // response.getWriter().write(text);
+        JSONObject jOMatches = new JSONObject();
 
-		JSONArray paraphrases = new JSONArray();
+        JSONArray paraphrases = new JSONArray();
 
-		if (PrevMatches != null && prevDoc.equals(textbody)) {
-			paraphrases = PrevMatches;
-		} else if(textbody !=null) {
-		//	 textbody = URLDecoder.decode(body.split("=")[2].substring(6).split("&")[0], "UTF-8");
-			
-			try {
-			List<AnswerShared> topCwis = AddResult2Db2.getTopNFromCwi((String)session.getAttribute("hitId"));
-				paraphrases= conf.getSimplePPDBParaphraseCwi(textbody, topCwis, paraphrases);
-				paraphrases= conf.getSingleParaphraseCwi(textbody, topCwis, paraphrases);
-				PrevMatches = paraphrases;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			/**
-			try {
-				setSpellErorrs(textbody, beginOffsets, paraphrases);
-				System.out.println("Getting from SimplePPDB...");
-				// NOT required
-				// addFromSimplePPDB(textbody, beginOffsets, paraphrases);
-				conf.getSimplePPDBParaphrase(textbody, beginOffsets, paraphrases);
-				System.out.println("Getting from SimplePPDB... DONE");
-				System.out.println("Getting MWE...");
-				// NOT required
-				// setMWEs(textbody, beginOffsets, paraphrases);
-				conf.getMWEParaphrase(textbody, beginOffsets, paraphrases);
-				System.out.println("Getting MWE...DONE");
-				System.out.println("Getting SINGLE...");
-				paraphrases = conf.getSingleParaphrase(textbody, beginOffsets, paraphrases);
-				System.out.println("Getting SINGLE...DONE");
-				prevDoc = textbody;
-				PrevMatches = paraphrases;
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("error" + e.getCause());
-			}
-			*/
-		}
-		List<JSONObject> jsonValues = new ArrayList<JSONObject>();
-		for (int i = 0; i < paraphrases.length(); i++) {
-			jsonValues.add(paraphrases.getJSONObject(i));
-		}
+        if (PrevMatches != null && prevDoc.equals(textbody)) {
+            paraphrases = PrevMatches;
+        } else if (textbody != null) {
+            // textbody = URLDecoder.decode(body.split("=")[2].substring(6).split("&")[0],
+            // "UTF-8");
 
-		Collections.sort(jsonValues, new Comparator<JSONObject>() {
-			@Override
-			public int compare(JSONObject a, JSONObject b) {
-				int valA = a.getInt("offset");
-				int valB = b.getInt("offset");
+            try {
+                List<AnswerShared> topCwis = AddResult2Db2
+                                .getTopNFromCwi((String) session.getAttribute("hitId"));
+                paraphrases = conf.getSimplePPDBParaphraseCwi(textbody, topCwis, paraphrases);
+                paraphrases = conf.getSingleParaphraseCwi(textbody, topCwis, paraphrases);
+                PrevMatches = paraphrases;
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        List<JSONObject> jsonValues = new ArrayList<JSONObject>();
+        for (int i = 0; i < paraphrases.length(); i++) {
+            jsonValues.add(paraphrases.getJSONObject(i));
+        }
 
-				return ((Integer) valA).compareTo((Integer) valB);
-				// if you want to change the sort order, simply use the
-				// following:
-				// return -valA.compareTo(valB);
-			}
-		});
-		JSONArray sortedJsonArray = new JSONArray();
-		for (int i = 0; i < paraphrases.length(); i++) {
-			sortedJsonArray.put(jsonValues.get(i));
-		}
+        Collections.sort(jsonValues, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject a, JSONObject b) {
+                int valA = a.getInt("offset");
+                int valB = b.getInt("offset");
 
-		jOMatches.put("matches", sortedJsonArray);
-		System.out.println(jOMatches.toString());
-		response.getWriter().println(jOMatches.toString());
-		// response.getWriter().println(result);
-	}
-    
-	public static void initResources(Properties prop) throws Exception {
-		System.out.println("Inside initResources ...");
-		try {
-			// Par4SemResource.ppdb1Init(prop);
-		} catch (Exception e) {
-			// TODO
-		}
-		try {
-			// Par4SemResource.initLM(prop);
-		} catch (Exception e) {
-			// TODO
-		}
-		dbInit(prop);
+                return ((Integer) valA).compareTo((Integer) valB);
+                // if you want to change the sort order, simply use the
+                // following:
+                // return -valA.compareTo(valB);
+            }
+        });
+        JSONArray sortedJsonArray = new JSONArray();
+        for (int i = 0; i < paraphrases.length(); i++) {
+            sortedJsonArray.put(jsonValues.get(i));
+        }
 
-		Par4SemResource.init(prop);
-		conf = new GetParaphrase();
-		changeManagers = new HashMap<String, ChangeManager>();
-		changeLablesManagers = new HashMap<String, ChangeLabelManager>();
-		try {
-			System.out.println("Inside initResources phrase2Vec...");
-			//p2v = WordVectorSerializer.readWord2VecModel(prop.getProperty("w2vModelPath"));
-		//	p2v = WordVectorSerializer.readWord2VecModel(prop.getProperty("w2vModelPath"));
-			System.out.println("Inside initResources phrase2Vec... Done");
-		} catch (Exception e) {
-			System.out.println("Inside initResources phrase2Vec... Failed");
-		}
-		
-		cl.train(prop);
-		CWIFeaturize.init(prop.getProperty("w2vModelPath"), null, prop.getProperty("wikiCountFile"));
-	}
+        jOMatches.put("matches", sortedJsonArray);
+        System.out.println(jOMatches.toString());
+        response.getWriter().println(jOMatches.toString());
+        // response.getWriter().println(result);
+    }
 
+    public static void initResources(Properties prop) throws Exception {
+        System.out.println("Inside initResources ...");
+        try {
+            // Par4SemResource.ppdb1Init(prop);
+        } catch (Exception e) {
+            // TODO
+        }
+        try {
+            // Par4SemResource.initLM(prop);
+        } catch (Exception e) {
+            // TODO
+        }
+        dbInit(prop);
+
+        Par4SemResource.init(prop);
+        conf = new GetParaphrase();
+        changeManagers = new HashMap<String, ChangeManager>();
+        changeLablesManagers = new HashMap<String, ChangeLabelManager>();
+        try {
+            System.out.println("Inside initResources phrase2Vec...");
+            // p2v =
+            // WordVectorSerializer.readWord2VecModel(prop.getProperty("w2vModelPath"));
+            // p2v =
+            // WordVectorSerializer.readWord2VecModel(prop.getProperty("w2vModelPath"));
+            System.out.println("Inside initResources phrase2Vec... Done");
+        } catch (Exception e) {
+            System.out.println("Inside initResources phrase2Vec... Failed");
+        }
+
+        cl.train(prop);
+        CWIFeaturize.init(prop.getProperty("w2vModelPath"), null,
+                        prop.getProperty("wikiCountFile"));
+    }
 
     private static void dbInit(Properties prop) throws Exception {
         try {
-			System.out.println("Inside initResources ppdb2Init...");
-			Par4SemResource.ppdb2Init(prop);
-			System.out.println("Inside initResources ppdb2Init... DONE");
-		} catch (Exception e) {
-			throw new Exception("Error connecting PPDB2"+e.getMessage());
-		}
-		try {
-			System.out.println("Inside initResources jobimtextInit...");
-			Par4SemResource.jobimtextInit();
-			System.out.println("Inside initResources jobimtextInit... DONE");
-		} catch (Exception e) {
-		    System.out.println("Error initResources jobimtextInit... Failed " + e.getMessage() );
-			// TODO
-		}
-		try {
-			System.out.println("Inside initResources wordNetInit...");
-			Par4SemResource.wordNetInit(prop);
-			System.out.println("Inside initResources wordNetInit... DONE");
-		} catch (Exception e) {
-		    System.out.println("Error initResources wordNetInit... Failed "+e.getMessage());
-			// TODO
-		}
-		/*
-		 * try { Par4SemResource.readSimplePPDBFile(prop); } catch (Exception e) { // TODO
-		 * }
-		 */
-		try {
-			System.out.println("Inside initResources initSimplePpdb...");
-			Par4SemResource.initSimplePpdb(prop);
-			System.out.println("Inside initResources initSimplePpdb... DONE");
-		} catch (Exception e) {
-			// TODO
-		}
+            System.out.println("Inside initResources ppdb2Init...");
+            Par4SemResource.ppdb2Init(prop);
+            System.out.println("Inside initResources ppdb2Init... DONE");
+        } catch (Exception e) {
+            throw new Exception("Error connecting PPDB2" + e.getMessage());
+        }
+        try {
+            System.out.println("Inside initResources jobimtextInit...");
+            Par4SemResource.jobimtextInit();
+            System.out.println("Inside initResources jobimtextInit... DONE");
+        } catch (Exception e) {
+            System.out.println("Error initResources jobimtextInit... Failed " + e.getMessage());
+            // TODO
+        }
+        try {
+            System.out.println("Inside initResources wordNetInit...");
+            Par4SemResource.wordNetInit(prop);
+            System.out.println("Inside initResources wordNetInit... DONE");
+        } catch (Exception e) {
+            System.out.println("Error initResources wordNetInit... Failed " + e.getMessage());
+            // TODO
+        }
+        /*
+         * try { Par4SemResource.readSimplePPDBFile(prop); } catch (Exception e) { //
+         * TODO }
+         */
+        try {
+            System.out.println("Inside initResources initSimplePpdb...");
+            Par4SemResource.initSimplePpdb(prop);
+            System.out.println("Inside initResources initSimplePpdb... DONE");
+        } catch (Exception e) {
+            // TODO
+        }
 
-		try {
-			System.out.println("Inside initResources initPar4SimDB...");
-			Par4SemResource.initPar4SimDB(prop);
-			System.out.println("Inside initResources initPar4SimDB... DONE");
-		} catch (Exception e) {
-		    System.out.println("Error initResources initPar4SimDB... Failed" + e.getMessage());
-			// TODO
-		}
-		try {
-			System.out.println("Inside initResources initCwiDB...");
-			Par4SemResource.initCwiDB(prop);
-			System.out.println("Inside initResources initCwiDB... DONE");
-		} catch (Exception e) {
-			// TODO
-		}
+        try {
+            System.out.println("Inside initResources initPar4SimDB...");
+            Par4SemResource.initPar4SimDB(prop);
+            System.out.println("Inside initResources initPar4SimDB... DONE");
+        } catch (Exception e) {
+            System.out.println("Error initResources initPar4SimDB... Failed" + e.getMessage());
+            // TODO
+        }
+        try {
+            System.out.println("Inside initResources initCwiDB...");
+            Par4SemResource.initCwiDB(prop);
+            System.out.println("Inside initResources initCwiDB... DONE");
+        } catch (Exception e) {
+            // TODO
+        }
     }
 
     static Properties getConfigs(String config) throws IOException {
@@ -299,11 +318,11 @@ public class Controller extends HttpServlet {
         prop.getProperty("dbaddress");
         prop.getProperty("dbpass");
         prop.getProperty("indexname");
-        
+
         return prop;
 
     }
-    
+
     public static String getNewLinedText(String html) {
         String text;
         text = html.replaceAll("<br>", "THISISNEWLINE");
@@ -311,20 +330,40 @@ public class Controller extends HttpServlet {
         text = text.replaceAll("THISISNEWLINE", "\n");
         return text;
     }
-    
-    public static String getHitId(HttpSession session){
-        return (String)session.getAttribute("hitId");
+
+    public static String getHitId(HttpSession session) {
+        return (String) session.getAttribute("hitId");
+    }
+
+    public static String getWorkerId(HttpSession session) {
+        return (String) session.getAttribute("workerId");
+    }
+
+    public static String getAssignmentId(HttpSession session) {
+        return (String) session.getAttribute("assignmentId");
+    }
+
+    public static String getTarget(HttpSession session) {
+        return (String) session.getAttribute("word");
     }
     
-   public static String getWorkerId(HttpSession session){
-        return (String)session.getAttribute("workerId");
+    public static String buildErrorMessage(Exception e) {
+        String msg = e.toString() + "\r\n";
+
+        for (StackTraceElement stackTraceElement : e.getStackTrace()) {
+            msg += "\t" + stackTraceElement.toString() + "\r\n";
+        }
+
+         return msg;
     }
-   
-   public static String getAssignmentId(HttpSession session){
-       return (String)session.getAttribute("assignmentId");
-   }
-   
-   public static String getTarget(HttpSession session){
-       return (String)session.getAttribute("word");
-   }
+
+    public static String buildErrorMessage(Throwable e) {
+        String msg = e.toString() + "\r\n";
+
+        for (StackTraceElement stackTraceElement : e.getStackTrace()) {
+            msg += "\t" + stackTraceElement.toString() + "\r\n";
+        }
+
+        return msg;
+    }
 }

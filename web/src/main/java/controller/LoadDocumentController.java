@@ -17,6 +17,10 @@ import cwi.AddResult2Db2;
 public class LoadDocumentController extends HttpServlet {
 	private static final long serialVersionUID = -2908926119230344244L;
 
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Controller.fixHeaders(response);
+    }
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -44,10 +48,26 @@ public class LoadDocumentController extends HttpServlet {
 
 	protected void post(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	    
+        try {
+            Controller.fixHeaders(response);
+            // Your code here...
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("text/plain");
+            response.getWriter().println(Controller.buildErrorMessage(e));
+        } catch (Throwable e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("text/plain");
+            response.getWriter().println(Controller.buildErrorMessage(e));
+        }
+        
 	    HttpSession session = request.getSession();
 		String start = request.getParameter(Controller.START);
-	    String hitId = session.getId();
-        String workerId = session.getId();
+	   // String hitId = session.getId();
+        //String workerId = session.getId();
+		 String hitId = request.getRemoteAddr();
+         String workerId = request.getRemoteHost();
+         
 		String text = request.getParameter("content");
 		String undo = request.getParameter(Controller.UNDO);
 		String assignmentId = request.getParameter(Controller.ASSIGNMENTID);

@@ -45,6 +45,10 @@ public class CheckSpelling extends HttpServlet {
     private static final String GET_CWI = "get_incorrect_words";
     private static final String ACTION = "action";
 
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Controller.fixHeaders(response);
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -81,9 +85,27 @@ public class CheckSpelling extends HttpServlet {
     protected void post(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
       
+        
+        try {
+            Controller.fixHeaders(response);
+            // Your code here...
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("text/plain");
+            response.getWriter().println(Controller.buildErrorMessage(e));
+        } catch (Throwable e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("text/plain");
+            response.getWriter().println(Controller.buildErrorMessage(e));
+        }
+        
         HttpSession session = request.getSession();
-        String hitId = session.getId();
-        String workerId = session.getId();
+      //  String hitId = session.getId();
+      //  String workerId = session.getId();
+        
+        String hitId = request.getRemoteAddr();
+        String workerId = request.getRemoteHost();
+        
         String text = request.getParameter("text[]");
         String html = request.getParameter("html");
         String target = request.getParameter("word");
