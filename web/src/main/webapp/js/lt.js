@@ -260,7 +260,8 @@ function StartExperiment() {
 	$('#Origchecktext').hide();
 	
 	startOver ();
-	//spellchecker.check();
+	startOver ();
+	spellchecker.check();
 	window.scrollTo(0, 0);
 }
 

@@ -31,6 +31,8 @@ import com.google.gson.JsonArray;
 import cwi.AnswerShared;
 import cwi.CWI;
 import cwi.CWIFeaturize;
+import database.Par4SemResource;
+import database.Par4SimDataSource;
 import undoredo.ChangeLabelManager;
 import undoredo.ChangeManager;
 import undoredo.ParaphraseLabelChanger;
@@ -278,7 +280,7 @@ public class CheckSpelling extends HttpServlet {
 
 			out.close();
 	    }
-    private void highlightCwisParaphrases(PrintWriter out, JSONObject obj, String word, String text, String hitId) throws IOException, SQLException {
+    private void highlightCwisParaphrases(PrintWriter out, JSONObject obj, String word, String text, String hitId) throws Exception {
         JsonArray candidatesResponses = new JsonArray();
        // Map<String, Double> candidates = getCandidates2(word, AddResult2Db2.getCWIHitId(hitId), false);
         Map<String, Double> candidates = getCandidates(word);
@@ -295,31 +297,27 @@ public class CheckSpelling extends HttpServlet {
         out.close();
     }
 
-   public Map<String, Double> getCandidates(String word) throws IOException {
+   public Map<String, Double> getCandidates(String word) throws Exception {
         Map<String, Double> candidates = new HashMap<>();
         try {
             Controller.conf.getSimplePPDBParaphraseCwiHighlight(word, candidates);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+           Controller.reInit();         
         }
         try {
             Controller.conf.getSingleParaphraseCwiHighlight(word, candidates);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Controller.reInit(); 
         }
         try {
             Controller.conf.getMWEParaphraseHighlight(word, candidates);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Controller.reInit(); 
         }
         try {
             Controller.conf.getSimilar(word, candidates, 10);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Controller.reInit(); 
         }
         return candidates;
     }
