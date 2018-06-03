@@ -1,4 +1,4 @@
-[Demo](https://ltmaggie.informatik.uni-hamburg.de/semsch/simplify.html)
+[Demo](https://ltmaggie.informatik.uni-hamburg.de/par4sem/)
 
 ## Installation
 * Step 1

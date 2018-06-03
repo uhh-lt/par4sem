@@ -4,7 +4,7 @@ title: Par4Sem
 
 #baseurl: /krishna
 sass:
-    style: compressed
+    style: expanded
 
 #logo: "logo.jpg"
 

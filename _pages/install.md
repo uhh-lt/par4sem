@@ -2,25 +2,25 @@
 layout: post
 title: Installation
 permalink: /install/
-icon: desktop
+icon: cog fa-spin
 ---
 
-``Par4Sem`` can be installed in three different ways. While the first one requires to run only the frontend component from any web server (or even locally using a browser), the other two appraoch requoers installation of Docker.
+``Par4Sem`` can be installed in three different ways. While the first way allows to run only the frontend component from any web server (or even locally using a browser), the other two approach requires installation of [Docker](https://www.docker.com/).
 1. **Minimal installation**:
-    * Downlaod the frontend zip file from [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/par4sem/)
-    * Unzip the file and either 1) put the whole file in your webserver (such as apache) or 2) open the index.html file in your browser.
-    * If you deploy the file in a webserver, access it with the context name (if you deploy the file under the folder par4Sem, acccess it as (<a href ="http://WEBADDRESS/par4sem">http://WEBADDRESS/par4sem</a>)
+    * Download the frontend zip file from [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/par4sem/)
+    * Unzip the file and either 1) put the whole file in your web-server (such as apache) or 2) open the index.html file in your browser.
+    * If you deploy the file in a webserver, access it with the context name (if you deploy the file under the folder par4Sem, access it as (<a href ="http://WEBADDRESS/par4sem">http://WEBADDRESS/par4sem</a>)
     * Voila you are done  😄        
 1. **Complete local installation** Use resources and database dumps on local Machine.
-      Follow this approach if you like to install the complet `Par4Sem` software in your local server.
-      **Requirements**:  To run the whole application you need to fulfil the following:
+      Follow this approach if you like to install the complete `Par4Sem` software in your local server.
+      **Requirements**:  To run the whole application you need to fulfill the following:
       * [Docker Engine](https://docs.docker.com/install/) and [docker compose](https://docs.docker.com/compose/install/)
       * RAM ~4GB
-      * Hard Disk: ~100GB (for different resources and databse dumps)
+      * Hard Disk: ~100GB (for different resources and database dumps)
 
-      All the resource files such as phrase2vec emmedings, OpenNLP models for parts-of-speech tagging, tokenizations, and sentence splitting, Wikipedia frequency counts are available [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/resources/). Database dumps for the different paraphrase resources such as PPDB 2.0, JoBimText DT, WordNet, SimplePPDB and CWI datasets are available [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/database/).  [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/datasets/).
+      All the resource files such as phrase2vec embeddings, OpenNLP models for parts-of-speech tagging, tokenizations, and sentence splitting, Wikipedia frequency counts are available [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/resources/). Database dumps for the different paraphrase resources such as PPDB 2.0, JoBimText DT, WordNet, SimplePPDB and CWI datasets are available [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/database/).  [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/datasets/).
       To start ``Par4Sem``:
-      *  Download the [``docker-compose``](https://github.com/uhh-lt/par4sem/blob/master/docker-compose.yml) file.
+      *  Download the [docker-compose](https://github.com/uhh-lt/par4sem/blob/master/docker-compose.yml) file.
       * Download the [database dump](http://ltdata1.informatik.uni-hamburg.de/par4sem/database), unzip and put them under ``dumps`` folder
       * download the [resources file](http://ltdata1.informatik.uni-hamburg.de/par4sem/resources/), unzip and put them under ``data`` folder
       * start the docker as ``docker-compose up -d``
