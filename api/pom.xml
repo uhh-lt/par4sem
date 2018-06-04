@@ -10,7 +10,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-	<artifactId>par4semApi</artifactId>
+	<artifactId>api</artifactId>
 	<name>par4semApi</name>
 	<dependencies>
 		<dependency>
