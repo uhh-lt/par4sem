@@ -88,7 +88,7 @@ public class LoggingController extends HttpServlet {
         // String hitId = session.getId();
         // String workerId = session.getId();
 
-        String hitId = request.getRemoteAddr();
+        String hitId = Controller.hitId;
         String workerId = request.getRemoteHost();
 
         String assignmentId = request.getParameter("assignmentId");

@@ -14,7 +14,7 @@
         </senses>
     </tables>
 
-    <dbUrl>jdbc:mysql://db:3306/DT_wikipedia_trigram</dbUrl>
+    <dbUrl>jdbc:mysql://ltdocker:10015/DT_wikipedia_trigram</dbUrl>
         <dbUser>dummy</dbUser>
     <dbPassword>dummy</dbPassword>
     <jdbcString>com.mysql.jdbc.Driver</jdbcString>

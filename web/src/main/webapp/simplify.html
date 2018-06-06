@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Re-write the text to make it easier for ...</title>
+<meta name="description" content="">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.spellchecker.js"></script>
+<script type="text/javascript" src="js/ltpar4sim.js"></script>
+<script type="text/javascript" src="js/TimTurkTools.js"></script>
+<script src="js/jquery.fontselect.js"></script>
+
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="css/jquery.spellchecker.css" />
+<link rel="stylesheet" href="css/lt.css">
+<link rel="stylesheet" href="css/cool.css">
+<link rel="stylesheet" href="css/fontselect-default.css">
+</head>
+<body>
+	<fieldset>
+		<div id="experiment">
+			<h1 style="text-align: center;">
+				<span style="font-family: tahoma, geneva, sans-serif;">Simplify
+					the following sentences for a targeted readers.</span>
+			</h1>
+			<p style="text-align: center;">
+				<span style="font-family: tahoma, geneva, sans-serif;">(<a
+					id="Instlink" href="#instructions">see detail instruction below</a>)
+				</span>
+			</p>
+			<span id="Origchecktext"> </span>
+			<div id="exp-area">
+
+				<table>
+					<tr>
+						<td><input id="font" type="text"></td>
+						<td><select id="size">
+								<option value="7">7</option>
+								<option value="10">10</option>
+								<option value="12">12</option>
+								<option value="14">14</option>
+								<option value="16">16</option>
+								<option selected="selected" value="18">18</option>
+								<option value="20">20</option>
+								<option value="22">22</option>
+								<option value="24">24</option>
+								<option value="26">26</option>
+								<option value="28">28</option>
+								<option value="30">30</option>
+						</select></td>
+					</tr>
+				</table>
+				<div contenteditable="true" id="checktext">
+					ERORR! Please reload using the <b>Reload</b> button. If this persists, contact the requester
+				</div>
+				<table>
+					<tr>
+						<td>
+							<form action="" autocomplete="off" id="turkSubmit" method="post">
+                                <input id="assignmentId" name="assignmentId" type="hidden"
+                                									value="" />
+							<div>
+									<span class="input-group"><span style="font-family:tahoma,geneva,sans-serif;"> 
+									<span style="font-family:tahoma,geneva,sans-serif;"><strong><label>Your comments here</label></strong>:</span>
+									<textarea cols="100" id="comment" name="comment" placeholder="Write your comments here" rows="2" type="text"></textarea></span></span>
+									<span class="input-group"><span style="display:none;"><textarea class="form-control" id="simpleTextSubmit" name="simpleTextSubmit"></textarea></span></span>
+									<span class="input-group"><span style="display:none;"><textarea class="form-control" id="origTextSubmit" name="origTextSubmit"></textarea></span></span>
+							</div>
+									<input class="btn-gradient gray" id="submitButton"
+									name="submitButton" type="submit" value="Submit" /> 
+
+									<input class="btn-gradient cyan" type="button" id="btn_reload" 
+									value="New text"
+									onClick="if (!confirm('Are you sure? You will loose you changes!')) return false; reloadText();"
+									title="Get text anew" /> 
+									
+									<input
+									class="btn-gradient cyan" type="button" id="btn_undo"
+									value="Undo"
+									onClick="getUndo('undo');"
+									title="Undo my changes" /> 
+									
+									<input
+									class="btn-gradient cyan" type="button" id="btn_redo"
+									value="Redo"
+									onClick="getUndo('redo');"
+									title="Redo my changes" /> 
+									
+									<input class="btn-gradient cyan"
+									type="button" id="check-textarea" value="Highlight difficult words"></input>
+									
+								  <input class="btn-gradient cyan" type="button"
+									id="show-instruction" value="Show instructions"></input> 
+									
+									<input class="btn-gradient cyan" type="button" id="show-orig-text"
+									value="Show original text"></input>
+
+							</form>
+
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<div id="instructions"
+			style="background-color: #E4ECE8; color: #666666; padding-left: 3%; padding-top: 2%;">
+			<h1 align="center">Instructions</h1>
+			<p>
+			In this HIT, you will see texts which contain 5-10 sentences. 
+			Your task is to make these texts <strong>simpler</strong> to understand for <strong>children</strong>, <strong>language learners</strong>, 
+			or <strong>people with reading impairment</strong>, as much as possible.
+			 You do so by replacing <strong>difficult</strong> or <strong>complex</strong> words and phrases by the simpler ones, which fit the context well and preserve the original meaning.
+				
+			</p>
+
+			<p>
+				To make the simplification task easier, we provide you with built-in <strong>suggestion
+					system</strong>. It helps you edit the text in the following way:
+			</p>
+			<p>
+				<strong>1.</strong> When you open the HIT, some words will be highlighted. 
+				Click the highlighted word and it will show you a list of words or phrases (possible <strong>suggestions for replacing the original word or phrase</strong>). 
+				When one of the suggestions is simpler (even if it is wrong in grammar or plural and singular forms), and fit the context well, 
+				please click on that suggestion. You can still correct the replaced word (for its form or tense, for example). 
+				Select <strong>Do not change</strong> if none of the suggestions seems to fit.
+			</p>
+			<p>
+				<strong>2.</strong> In case you find some words or phrases that are difficult to understand but are not yet highlighted, 
+				you can select them by double clicking on the word. If the system can provide you with a list of suggestions, the word/phrase you selected will become highlighted and 
+				you will see the list of suggestions for replacing it.
+			</p>
+			<p>
+				<strong>3.</strong> In case you do not like any of the suggested words/phrases, you can use the <strong>back space key</strong> to delete the original word/phrase and write your own suggestion.
+			</p>
+			How to work with the buttons:
+			<ul>
+				<li><strong><span style="color:blue">Reload</span></strong>: Get the original text again. This will remove all your changes. </li>
+				<li><strong><span style="color:blue">Undo/Redo</span></strong>: Undo or redo your changes </li>
+				<li><strong><span style="color:blue">Highlight difficult words</span></strong>: For the existing text, get  suggestions for replacements from the system. </li>
+				<li><strong><span style="color:blue">Show instructions / Show animation</span></strong>: It shows you the detailed instructions or the animation.</li>
+				<li><strong><span style="color:blue">Show original text / Hide original texts </span></strong>: It shows/hides the original text to compare with your editing.</li>
+			</ul>
+
+			<p style="text-align: center">
+				<a  href="javascript:StartExperiment();void(0);" id="start" >Start Experiment</a>
+			</p>
+			<!-- Consent statement at bottom: -->
+
+
+			<p>If you have questions or comments about this task, please provide your comments or questions in the provided text field.</p>
+			<p>
+				You will be able to submit the text after making enough changes and the <strong> Submit </strong> button is active (in blue background). Until then, the submit button will remain inactive (gray background). 
+				Having the <strong>Submit</strong> button active does not mean that your work is completed or your answer is accepted. 
+				It only shows that there is a reasonable progress in editing the text. <br>
+				<br> In case the text is already simple (in your opinion) butt the <strong>Submit</strong> button is not yet active, tell us in the comment text field so that the <strong>Submit</strong> button will be active.
+			</p>
+			<p>
+				Please <span style="color: red"><strong>NEVER SELECT
+						WRONG SUGGESTIONS</strong> </span> after clicking the highlighted words.
+						If none of the suggestions is valid, click on <strong> Do not change</strong> and type your own substitute if you like.
+			</p>
+			<p>Below you can see the animation of the task (or once accepted the task, click the <strong>Show animation</strong> button).</p>
+		</div>
+	</fieldset>
+	
+	<IMG id="animation" SRC="images/par4sim.gif">
+</body>
+</html>

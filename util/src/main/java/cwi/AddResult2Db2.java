@@ -690,7 +690,7 @@ public class AddResult2Db2 {
        return  cwiHitId;
     }
 
-    public static Set<String> getTopNFromCwiHighlight(String hitId) throws SQLException {
+    public static Set<String> getTopNFromCwiHighlight(String hitId) throws Exception {
 
         ResultSet questions = Par4SemResource.par4SimConn.createStatement()
                         .executeQuery("select cwiHitId from hit where hitId = '" + hitId + "';");
@@ -699,7 +699,7 @@ public class AddResult2Db2 {
        return  getTopCWI(cwiHitId);
     }
 
-    public static  Set<String> getTopCWI(String cwiHitId) throws SQLException {
+    public static  Set<String> getTopCWI(String cwiHitId) throws Exception {
         
         Set<String> topNCwis = new HashSet<>();
         String topnQuery = "select answer, begin, end, count(*) as ct from answers where hitId ='"
@@ -731,6 +731,17 @@ public class AddResult2Db2 {
         return hitIds;
     }
 
+    public static  Set<String> getHitIds() throws SQLException {
+
+        ResultSet cwiHitIds = Par4SemResource.par4SimConn.createStatement()
+                        .executeQuery("select hitId from hit ;");
+       Set<String> hitIds =new HashSet<>();
+        while (cwiHitIds.next()) {
+            hitIds.add(cwiHitIds.getString("hitId"));
+        }
+        return hitIds;
+    }
+    
     private static boolean contained(Set<String> existings, String newcwi) {
 
         for (String oldcwi : existings) {

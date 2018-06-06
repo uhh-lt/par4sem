@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
+
 import cwi.AddResult2Db2;
 
 @WebServlet(value = "/loadDocument", name = "loadDocument")
@@ -72,34 +75,32 @@ public class LoadDocumentController extends HttpServlet {
         String start = request.getParameter(Controller.START);
         // String hitId = session.getId();
         // String workerId = session.getId();
-        String hitId = request.getRemoteAddr();
+    	// String workerId = session.getId();
         String workerId = request.getRemoteHost();
-
         String text = request.getParameter("content");
         String undo = request.getParameter(Controller.UNDO);
-        String assignmentId = request.getParameter(Controller.ASSIGNMENTID);
+        //String assignmentId = request.getParameter(Controller.ASSIGNMENTID);
 
         if (start != null) {
             session.removeAttribute(Controller.UNDO);
             return;
         }
-        if (assignmentId != null)
-            session.setAttribute(Controller.ASSIGNMENTID, assignmentId);
-        if (hitId != null)
-            session.setAttribute(Controller.HITID, hitId);
+
+        if (Controller.hitId != null)
+            session.setAttribute(Controller.HITID, Controller.hitId);
         if (workerId != null)
             session.setAttribute(Controller.WORKERID, workerId);
 
         // UNDO TEXT
         if (undo != null && undo.equals("undo")) {
-            doUndo(response, hitId + workerId, session);
+            doUndo(response, Controller.hitId + workerId, session);
             session.setAttribute(Controller.UNDO, undo);
             return;
         }
 
         // REDO TEXT
         if (undo != null && undo.equals("redo")) {
-            doRedo(response, hitId + workerId, session);
+            doRedo(response, Controller.hitId + workerId, session);
             session.setAttribute(Controller.UNDO, undo);
             return;
         }
@@ -107,10 +108,12 @@ public class LoadDocumentController extends HttpServlet {
         // BEGIN CHANGE MTURK
         // if (text == null) {
         try {
-
+        	Set<String> hitIds = AddResult2Db2.getHitIds();
+        	Controller.hitId = new ArrayList<>(hitIds).get((new Random()).nextInt(hitIds.size()));
             // IF NO DB, GET it FROm ...
-            text = AddResult2Db2.getPar4SimOriginalText(hitId);// .replaceAll("\n", " ");
-            // text = text.replaceAll("(\n)", "&#013; &#010;");;
+            text = AddResult2Db2.getPar4SimOriginalText(Controller.hitId);// .replaceAll("\n", " ");
+            // text = text.replaceAll("(\n)", "&#013; &#010;");
+             session.setAttribute(Controller.ORIG_TEXT, text);
         } catch (Exception e) {
 
             text = getRandomeFile();
@@ -127,9 +130,8 @@ public class LoadDocumentController extends HttpServlet {
          * Please reload page or return the HIT and contact the requester"; } END CHANGE
          * MTURK
          */
-
         session.setAttribute("text", text);
-        session.setAttribute("hitId", hitId);
+        session.setAttribute("hitId", Controller.hitId);
         PrintWriter out = response.getWriter();
         response.setContentType("text/plain");
         // out.write(StringEscapeUtils.escapeHtml4(text));

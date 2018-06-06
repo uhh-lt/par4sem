@@ -50,7 +50,8 @@ public class Controller extends HttpServlet {
     public static final String START = "start";
     public static final String ORIG_TEXT = "orig_text";
     public static final int TRESHOLD = 58;
-
+    public static String hitId = "DUMMY";
+    public static String workerId = "DUMMY";
     // public static final String HITLABLES ="hit-lables";
 
     static String prevDoc = "";
@@ -93,7 +94,7 @@ public class Controller extends HttpServlet {
     }
 
     public static void reInit() throws Exception {
-        Controller cr = new Controller();
+
         try {
             Par4SemResource.ppdb2Conn.close();
         } catch (Exception e) {
@@ -160,7 +161,7 @@ public class Controller extends HttpServlet {
         HttpSession session = request.getSession();
         String body = request.getReader().readLine();
         String textbody = (String) session.getAttribute("text");
-        String hitId = request.getParameter("hitId");
+       // String hitId = request.getParameter("hitId");
         String texts = request.getParameter("text");
         System.out.println("Texts =" + texts);
 
@@ -220,16 +221,6 @@ public class Controller extends HttpServlet {
 
     public static void initResources(Properties prop) throws Exception {
         System.out.println("Inside initResources ...");
-        try {
-            // Par4SemResource.ppdb1Init(prop);
-        } catch (Exception e) {
-            // TODO
-        }
-        try {
-            // Par4SemResource.initLM(prop);
-        } catch (Exception e) {
-            // TODO
-        }
         dbInit(prop);
 
         Par4SemResource.init(prop);
@@ -247,9 +238,9 @@ public class Controller extends HttpServlet {
             System.out.println("Inside initResources phrase2Vec... Failed");
         }
 
-        cl.train(prop);
-        CWIFeaturize.init(prop.getProperty("w2vModelPath"), null,
-                        prop.getProperty("wikiCountFile"));
+      //  cl.train(prop);
+      //  CWIFeaturize.init(prop.getProperty("w2vModelPath"), null,
+       //                 prop.getProperty("wikiCountFile"));
     }
 
     private static void dbInit(Properties prop) throws Exception {

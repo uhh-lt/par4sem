@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
+import cwi.AddResult2Db2;
 import undoredo.ParaphraseLabelChanger;
 import undoredo.ParaphraseTextChanger;
 
@@ -75,7 +76,7 @@ public class UpdateController extends HttpServlet {
         String html = request.getParameter(Controller.HTML);
         // String hitId = session.getId();
         // String workerId = session.getId();
-        String hitId = request.getRemoteAddr();
+        String hitId = Controller.hitId;
         String workerId = request.getRemoteHost();
         String hitIdWorkerId = hitId + workerId;
         JsonArray matches = new JsonArray();
@@ -85,7 +86,7 @@ public class UpdateController extends HttpServlet {
         }
 
         if (getCounts(Controller.getNewLinedText(html), selection) < 2
-                        && CheckSpelling.getCandidates3(selection).size() > 2) {
+                        && CheckSpelling.getCandidates2(selection, AddResult2Db2.getCWIHitId(hitId), false).size() > 2) {
             matches.add(selection);
             Controller.changeLablesManagers.get(hitIdWorkerId)
                             .addChangeable(new ParaphraseLabelChanger(matches));
