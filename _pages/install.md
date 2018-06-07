@@ -6,12 +6,17 @@ icon: cog fa-spin
 ---
 
 ``Par4Sem`` can be installed in three different ways. While the first way allows to run only the frontend component from any web server (or even locally using a browser), the other two approach requires installation of [Docker](https://www.docker.com/).
-1. **Minimal installation**:
+
+Minimal installation
+===
     * Download the frontend zip file from [here](http://ltdata1.informatik.uni-hamburg.de/par4sem/par4sem/)
     * Unzip the file and either 1) put the whole file in your web-server (such as apache) or 2) open the index.html file in your browser.
     * If you deploy the file in a webserver, access it with the context name (if you deploy the file under the folder par4Sem, access it as (<a href ="http://WEBADDRESS/par4sem">http://WEBADDRESS/par4sem</a>)
     * Voila you are done  😄        
-1. **Complete local installation** Use resources and database dumps on local Machine.
+
+Complete local installation
+===
+      Use resources and database dumps on local Machine.
       Follow this approach if you like to install the complete `Par4Sem` software in your local server.
       **Requirements**:  To run the whole application you need to fulfill the following:
       * [Docker Engine](https://docs.docker.com/install/) and [docker compose](https://docs.docker.com/compose/install/)
@@ -26,7 +31,8 @@ icon: cog fa-spin
       * start the docker as ``docker-compose up -d``
 
 
-3. **From source code**
+From source code
+===
       * Clone the source code from GutHub: `git clone https://github.com/uhh-lt/par4sem.git`
       * run `mvn clean install` inside par4sem directory
       * copy the DockerFile, and the web/targte/par4sem.war file to a directory of your choice

@@ -2,6 +2,7 @@
 layout: post
 title: About Par4Sem
 permalink: /about/
+icon: fa fa-user
 ---
 
 ``Par4Sem`` -- Adaptive Paraphrasing for  Semantic-aware Writing Aid Tools
