@@ -9,9 +9,9 @@ icon: fa fa-user
 
 Source code: [https://github.com/uhh-lt/par4sem](https://github.com/uhh-lt/par4sem)
 
-Datasets : [https://github.com/uhh-lt/par4sem](https://uhh-lt.github.io/par4sem/2018/05/29/dataset.html)
+[Datasets](https://uhh-lt.github.io/par4sem/2018/05/29/dataset.html)
 
-Demo : [here](https://ltmaggie.informatik.uni-hamburg.de/par4sem/)
+[Demo](https://ltmaggie.informatik.uni-hamburg.de/par4sem/)
 
 **Does ``Par4Sem`` deserve a star?**
 
