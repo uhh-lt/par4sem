@@ -5,7 +5,7 @@ networks:
 
 services:
   par4sem:
-    image: uhhlt/par4sem
+    image: uhhlt/par4sim
     restart: on-failure
     networks:
       par:
